@@ -3,5 +3,5 @@ export function LayoutCenter({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="container sm:p-10 p-2">{children}</div>;
+  return <div className="container sm:p-10 p-0">{children}</div>;
 }

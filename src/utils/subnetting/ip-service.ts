@@ -9,10 +9,8 @@ export function generateRandomIPAddress(): IPAddress {
 export function loadNextIPAddress(ipAddress: IPAddress): IPAddress {
     const ipAddressCopy: IPAddress = JSON.parse(JSON.stringify(ipAddress));
 
-    // Increment the last octet
     ipAddressCopy.addressNumbers[3]++;
 
-    // Handle overflow
     for (let i = 3; i >= 0; i--) {
         if (ipAddressCopy.addressNumbers[i] > 255) {
           ipAddressCopy.addressNumbers[i] = 0;
@@ -26,11 +24,8 @@ export function loadNextIPAddress(ipAddress: IPAddress): IPAddress {
 export function loadPreviousIPAddress(ipAddress: IPAddress): IPAddress {
   const ipAddressCopy: IPAddress = JSON.parse(JSON.stringify(ipAddress));
 
-
-    // Decrement the last octet
     ipAddressCopy.addressNumbers[3]--;
 
-    // Handle underflow
     for (let i = 3; i >= 0; i--) {
         if (ipAddressCopy.addressNumbers[i] < 0) {
             ipAddressCopy.addressNumbers[i] = 255;
@@ -44,6 +39,7 @@ export function loadPreviousIPAddress(ipAddress: IPAddress): IPAddress {
 export function convertBinaryIP(addressBinary: string): IPAddress {
   const address = splitIntoOctets(addressBinary).map(octet => convertBinaryOctet(octet)).join('.');
   const addressNumbers = address.split('.').map(octet => parseInt(octet));
+
   return {
     address,
     addressNumbers,
@@ -54,6 +50,7 @@ export function convertBinaryIP(addressBinary: string): IPAddress {
 export function convertStringIP(address: string): IPAddress {
   const addressBinary = address.split('.').map(octet => parseInt(octet).toString(2).padStart(8, '0')).join('');
   const addressNumbers = address.split('.').map(octet => parseInt(octet));
+
   return {
     address,
     addressNumbers,
@@ -74,15 +71,18 @@ export function convertArrayIP(addressNumbers: number[]): IPAddress {
 
 export function splitIntoOctets(str: string): string[] {
   const octets: string[] = [];
+
   for (let i = 0; i < str.length; i += 8) {
       const octet = str.slice(i, i + 8);
       octets.push(octet);
   }
+
   return octets;
 }
 
 export function convertBinaryOctet(octet: string): number {
   let sum = 0;
+  
   octet.split('').reverse().forEach((bit, index) => {
     sum += parseInt(bit) * Math.pow(2, index);
   });

@@ -14,7 +14,6 @@ export function convertSubnet(ipAddress: IPAddress, subnetMask: SubnetMask): Sub
 
   const firstHostIP: IPAddress = convertBinaryIP(networkIP.addressBinary.slice(0, 31) + '1');
   const lastHostIP: IPAddress = convertBinaryIP(broadcastIP.addressBinary.slice(0, 31) + '0');
-
   
   return {
     networkIP: networkIP,

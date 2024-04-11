@@ -27,6 +27,7 @@ export interface SubnettingExercise {
   subnetCount: number;
   subnetMask: SubnetMask;
   subnets: Subnet[];
+  exerciseType: SubnettingExerciseType;
 }
 
 export enum SubnettingExerciseType {

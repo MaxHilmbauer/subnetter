@@ -19,7 +19,6 @@ function nextPowerOfTwo(n: number): number {
 }
 
 function generateHostCountExercise(subnet: Subnet): SubnettingExercise {
-  
   const hostCount: number = Math.floor(Math.random() * subnet.addresses / 2) + 4;
   const subnetCount: number = subnet.addresses / nextPowerOfTwo(hostCount);
   const subnetMask: SubnetMask = convertCIDRSubnetMask(Math.log2(subnetCount) + subnet.mask.cidr);
@@ -30,6 +29,7 @@ function generateHostCountExercise(subnet: Subnet): SubnettingExercise {
   }
 
   return {
+    exerciseType: SubnettingExerciseType.HOST_COUNT_EXERCISE,
     subnet,
     hostCount,
     subnetCount,
@@ -42,7 +42,8 @@ function generateSubnetCountExercise(subnet: Subnet): SubnettingExercise {
   const newSubnetCount = Math.floor(Math.random() * 16) + 1;
 
   const subnettingExercise: SubnettingExercise = {
-    subnet: subnet,
+    exerciseType: SubnettingExerciseType.SUBNET_COUNT_EXERCISE,
+    subnet,
     hostCount: 0,
     subnetCount: 0,
     subnetMask: {} as SubnetMask,
@@ -56,7 +57,8 @@ function generateSubnetMaskExercise(subnet: Subnet): SubnettingExercise {
   const newMask = Math.floor(Math.random() * 24) + 8;
 
   const subnettingExercise: SubnettingExercise = {
-    subnet: subnet,
+    exerciseType: SubnettingExerciseType.SUBNET_MASK_EXERCISE,
+    subnet,
     hostCount: 0,
     subnetCount: 0,
     subnetMask: {} as SubnetMask,
@@ -74,9 +76,8 @@ function getRandomExerciseType(): SubnettingExerciseType {
 }
 
 export function generateSubnettingExercise(): SubnettingExercise {
-  
   const subnet: Subnet = generateRandomSubnet();
-  const exerciseType = getRandomExerciseType();
+  // const exerciseType = getRandomExerciseType();
 
   return generateHostCountExercise(subnet);
 

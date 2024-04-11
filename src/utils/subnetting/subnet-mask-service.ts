@@ -60,7 +60,6 @@ export function convertBinarySubnetMask(maskBinary: string): SubnetMask {
   const cidr = maskBinary.split('').filter(bit => bit === '1').length;
   const mask = maskNumbers.join('.');
 
-
   return {
     cidr,
     mask,

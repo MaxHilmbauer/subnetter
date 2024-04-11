@@ -1,6 +1,6 @@
 import { SubnettingExercise } from "@/types/subnetting";
 import { SubnetCard } from "./subnet-card";
-import { generateSubnettingExercise } from "@/utils/subnetting/exercise-generator";
+import { generateSubnettingExercise } from "@/utils/subnetting/subnet-exercise-generator";
 import { getTranslations } from "next-intl/server";
 
 export default async function SubnetPractice() {
@@ -14,7 +14,8 @@ export default async function SubnetPractice() {
   async function newExercise(): Promise<SubnettingExercise> {
     "use server";
     const exercise = await generateSubnettingExercise();
-    console.log(exercise);
+
+    console.log(JSON.stringify(exercise));
 
     return exercise;
   }

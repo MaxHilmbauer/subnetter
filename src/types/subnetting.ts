@@ -1,14 +1,22 @@
-export interface Subnet {
-  network: string,
-  networkBinary: string;
-  mask: number;
+export interface IPAddress {
+  address: string;
+  addressNumbers: number[];
+  addressBinary: string;
+}
+
+export interface SubnetMask {
+  cidr: number;
+  mask: string;
+  maskNumbers: number[];
   maskBinary: string;
-  firstHost: string;
-  firstHostBinary: string;
-  lastHost: string;
-  lastHostBinary: string;
-  broadcast: string;
-  broadcastBinary: string;
+}
+
+export interface Subnet {
+  networkIP: IPAddress,
+  mask: SubnetMask;
+  firstHostIP: IPAddress;
+  lastHostIP: IPAddress;
+  broadcastIP: IPAddress;
   addresses: number
   hosts: number;
 }
@@ -17,7 +25,7 @@ export interface SubnettingExercise {
   subnet: Subnet;
   hostCount: number;
   subnetCount: number;
-  mask: number;
+  subnetMask: SubnetMask;
   subnets: Subnet[];
 }
 

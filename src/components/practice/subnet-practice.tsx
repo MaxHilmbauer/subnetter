@@ -1,29 +1,13 @@
-import { SubnettingExercise } from "@/types/subnetting";
 import { SubnetCard } from "./subnet-card";
 import { generateSubnettingExercise } from "@/utils/subnetting/subnet-exercise-generator";
-import { getTranslations } from "next-intl/server";
+import { NextIntlClientProvider, useMessages } from "next-intl";
 
-export default async function SubnetPractice() {
-  const translation = await getTranslations("Practice");
-  const subnetCardTranslation = {
-    title: translation("practiceTitle"),
-    newExerciseButton: translation("practiceButtonNewExercise"),
-    showSolutionButton: translation("practiceButtonShowSolution"),
-  };
-
-  async function newExercise(): Promise<SubnettingExercise> {
-    "use server";
-    const exercise = await generateSubnettingExercise();
-
-    console.log(JSON.stringify(exercise));
-
-    return exercise;
-  }
+export default function SubnetPractice() {
+  const messages = useMessages();
 
   return (
-    <SubnetCard
-      newExercise={newExercise}
-      translations={subnetCardTranslation}
-    />
+    <NextIntlClientProvider messages={messages}>
+      <SubnetCard />
+    </NextIntlClientProvider>
   );
 }

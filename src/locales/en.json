@@ -1,9 +1,9 @@
 {
   "Practice": {
-    "practiceTitle": "Exercises",
-    "practiceDescription": "Exercises are a great way to solidify what you've learned. Here you'll find a selection of exercises to help you internalize the basics.",
-    "practiceButtonNewExercise": "New Exercise",
-    "practiceButtonShowSolution": "Show Solution"
+    "title": "Exercises",
+    "description": "You are given following subnet {networkIP}/{cidr}. It should be divided equally in subnets with {hosts} hosts. Fill out the values in the table below.",
+    "newExerciseBtn": "New Exercise",
+    "showSolutionBtn": "Show Solution"
   }
   
 }

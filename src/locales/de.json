@@ -1,7 +1,7 @@
 {
   "Practice": {
     "practiceTitle": "Übungen",
-    "practiceDescription": "Übungen sind eine großartige Möglichkeit, um das Gelernte zu festigen. Hier findest du eine Auswahl an Übungen, die dir helfen, die Grundlagen zu verinnerlichen.",
+    "hostCountExerciseDescription": "Es ist folgendes Subnet gegeben {networkIP}/{cidr}. Es soll nun in Subnets mit jeweils {hosts} aufgeteilt werden. Fülle die untere Tabelle aus.",
     "practiceButtonNewExercise": "Neue Übung",
     "practiceButtonShowSolution": "Lösung anzeigen"
   }

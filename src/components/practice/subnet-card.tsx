@@ -9,37 +9,43 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SubnettingExercise } from "@/types/subnetting";
-import { useState } from "react";
+import { generateSubnettingExercise } from "@/utils/subnetting/subnet-exercise-generator";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 
-interface SubnetCardProps {
-  newExercise: () => Promise<SubnettingExercise>;
-  translations: {
-    title: string;
-    newExerciseButton: string;
-    showSolutionButton: string;
-  };
-}
+export function SubnetCard() {
+  const t = useTranslations("Practice");
+  const [exercise, setExercise] = useState<SubnettingExercise>(
+    {} as SubnettingExercise
+  );
 
-export function SubnetCard(props: SubnetCardProps) {
-  const [exercise, setExercise] = useState<SubnettingExercise | null>(null);
+  useEffect(() => {
+    setExercise(generateSubnettingExercise());
+  }, []);
 
-  const handleTest = async () => {
-    setExercise(await props.newExercise());
+  const loadNewExercise = () => {
+    setExercise(generateSubnettingExercise());
   };
 
   return (
     <Card className="justify-self-center w-3/4">
       <CardHeader>
         <CardTitle className="text-3xl font-semibold text-center">
-          {props.translations.title}
+          {t("title")}
         </CardTitle>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        {t("description", {
+          networkIP: exercise.subnet?.networkIP.address,
+          cidr: exercise.subnet?.mask.cidr,
+          hosts: exercise.hostCount,
+        })}
+      </CardContent>
       <CardFooter className="flex justify-between">
-        <Button size={"sm"} onClick={() => handleTest()}>
-          {props.translations.newExerciseButton}
+        <Button size={"sm"} onClick={() => loadNewExercise()}>
+          {t("newExerciseBtn")}
         </Button>
-        <Button size={"sm"}> {props.translations.showSolutionButton}</Button>
+        <Button size={"sm"}> {t("showSolutionBtn")} </Button>
       </CardFooter>
     </Card>
   );

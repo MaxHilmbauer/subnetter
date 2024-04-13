@@ -1,9 +1,10 @@
 {
   "Practice": {
-    "practiceTitle": "Übungen",
-    "hostCountExerciseDescription": "Es ist folgendes Subnet gegeben {networkIP}/{cidr}. Es soll nun in Subnets mit jeweils {hosts} aufgeteilt werden. Fülle die untere Tabelle aus.",
-    "practiceButtonNewExercise": "Neue Übung",
-    "practiceButtonShowSolution": "Lösung anzeigen"
+    "title": "Übungen",
+    "description": "Es ist folgendes Subnet gegeben {networkIP}/{cidr}. Unterteile es in {hosts} Hosts. Fülle die Felder in der unteren Tabellea aus.",
+    "newExerciseBtn": "Neue Aufgabe",
+    "showSolutionBtn": "Lösung anzeigen"
   }
+  
 }
 

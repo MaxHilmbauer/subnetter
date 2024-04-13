@@ -19,14 +19,16 @@ function nextPowerOfTwo(n: number): number {
 }
 
 function generateHostCountExercise(subnet: Subnet): SubnettingExercise {
-  const hostCount: number = Math.floor(Math.random() * (30 - subnet.mask.cidr + 1)) + subnet.mask.cidr + 1;
+  const minCIDR = subnet.mask.cidr < 22 ? 20 : subnet.mask.cidr;
+  const maxHost = Math.pow(2, 32 - minCIDR - 1);
+  const hostCount: number = Math.floor(Math.random() * (maxHost - 4) + 4);
   const subnetCount: number = subnet.addresses / nextPowerOfTwo(hostCount);
   const subnetMask: SubnetMask = convertCIDRSubnetMask(Math.log2(subnetCount) + subnet.mask.cidr);
   const subnets: Subnet[] = [convertSubnet(subnet.networkIP, subnetMask)];
   
-  for (var i = 1; i < subnetCount; i++) {
+  /*for (var i = 1; i < subnetCount; i++) {
     subnets.push(loadNextSubnet(subnets[i - 1]));
-  }
+  }*/
 
   return {
     exerciseType: SubnettingExerciseType.HOST_COUNT_EXERCISE,
@@ -76,9 +78,7 @@ function getRandomExerciseType(): SubnettingExerciseType {
 }
 
 export function generateSubnettingExercise(): SubnettingExercise {
-  console.log('Yee');
   const subnet: Subnet = generateRandomSubnet();
-  console.log(subnet.networkIP.address + "/" + subnet.mask.cidr);
   
 
   return generateHostCountExercise(subnet);

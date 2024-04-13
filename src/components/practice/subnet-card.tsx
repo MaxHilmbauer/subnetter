@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { SubnettingExercise } from "@/types/subnetting";
 import { generateSubnettingExercise } from "@/utils/subnetting/subnet-exercise-generator";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
@@ -18,14 +19,28 @@ export function SubnetCard() {
   const [exercise, setExercise] = useState<SubnettingExercise>(
     {} as SubnettingExercise
   );
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setExercise(generateSubnettingExercise());
+    loadNewExercise();
   }, []);
 
   const loadNewExercise = () => {
-    setExercise(generateSubnettingExercise());
+    const exercise = generateSubnettingExercise();
+    console.log(exercise.hostCount);
+    setExercise(exercise);
   };
+
+  const ExerciseButton = loading ? (
+    <Button disabled>
+      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+      Loading...
+    </Button>
+  ) : (
+    <Button size={"sm"} onClick={() => loadNewExercise()}>
+      {t("newExerciseBtn")}
+    </Button>
+  );
 
   return (
     <Card className="justify-self-center w-3/4">
@@ -41,12 +56,7 @@ export function SubnetCard() {
           hosts: exercise.hostCount,
         })}
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button size={"sm"} onClick={() => loadNewExercise()}>
-          {t("newExerciseBtn")}
-        </Button>
-        <Button size={"sm"}> {t("showSolutionBtn")} </Button>
-      </CardFooter>
+      <CardFooter className="flex justify-end">{ExerciseButton}</CardFooter>
     </Card>
   );
 }

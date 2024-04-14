@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -13,13 +14,13 @@ import { generateSubnettingExercise } from "@/utils/subnetting/subnet-exercise-g
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { SubnetCardForm } from "./subnet-practice-form";
 
 export function SubnetCard() {
   const t = useTranslations("Practice");
   const [exercise, setExercise] = useState<SubnettingExercise>(
     {} as SubnettingExercise
   );
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadNewExercise();
@@ -31,32 +32,28 @@ export function SubnetCard() {
     setExercise(exercise);
   };
 
-  const ExerciseButton = loading ? (
-    <Button disabled>
-      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-      Loading...
-    </Button>
-  ) : (
-    <Button size={"sm"} onClick={() => loadNewExercise()}>
-      {t("newExerciseBtn")}
-    </Button>
-  );
-
   return (
-    <Card className="justify-self-center w-3/4">
+    <Card className="justify-self-center max-md:w-11/12">
       <CardHeader>
         <CardTitle className="text-3xl font-semibold text-center">
           {t("title")}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardDescription className="text-center">
         {t("description", {
           networkIP: exercise.subnet?.networkIP.address,
           cidr: exercise.subnet?.mask.cidr,
           hosts: exercise.hostCount,
         })}
+      </CardDescription>
+      <CardContent>
+        <SubnetCardForm subnets={exercise.subnets} />
       </CardContent>
-      <CardFooter className="flex justify-end">{ExerciseButton}</CardFooter>
+      <CardFooter className="flex justify-end">
+        <Button size={"sm"} onClick={() => loadNewExercise()}>
+          {t("newExerciseBtn")}
+        </Button>
+      </CardFooter>
     </Card>
   );
 }

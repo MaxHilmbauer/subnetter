@@ -23,12 +23,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
-          forcedTheme="dark"
+          forcedTheme="light"
+          enableSystem={true}
           disableTransitionOnChange
         >
           <div className="container mt-10">
             <div className="flex">
-              <h1 className="text-4xl font-bold">Subnetter</h1>
+              <h1 className="text-4xl font-bold">Subnetter IPv4</h1>
               <Badge className="ml-4 self-center"> v1.0 </Badge>
             </div>
           </div>

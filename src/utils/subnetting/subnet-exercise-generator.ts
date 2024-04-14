@@ -26,9 +26,9 @@ function generateHostCountExercise(subnet: Subnet): SubnettingExercise {
   const subnetMask: SubnetMask = convertCIDRSubnetMask(Math.log2(subnetCount) + subnet.mask.cidr);
   const subnets: Subnet[] = [convertSubnet(subnet.networkIP, subnetMask)];
   
-  /*for (var i = 1; i < subnetCount; i++) {
+  for (var i = 1; i < subnetCount; i++) {
     subnets.push(loadNextSubnet(subnets[i - 1]));
-  }*/
+  }
 
   return {
     exerciseType: SubnettingExerciseType.HOST_COUNT_EXERCISE,

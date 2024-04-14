@@ -1,7 +1,7 @@
 {
   "Practice": {
     "title": "Exercises",
-    "description": "You are given following subnet {networkIP}/{cidr}. It should be divided equally in subnets with {hosts} hosts. Fill out the values in the table below.",
+    "description": "You are given following subnet {networkIP}/{cidr}. It should be divided equally in subnets with {hosts} hosts. Fill out the inputs below.",
     "newExerciseBtn": "New Exercise",
     "showSolutionBtn": "Show Solution"
   }

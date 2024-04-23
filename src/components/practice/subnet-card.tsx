@@ -11,10 +11,9 @@ import {
 } from "@/components/ui/card";
 import { SubnettingExercise } from "@/types/subnetting";
 import { generateSubnettingExercise } from "@/utils/subnetting/subnet-exercise-generator";
-import { ReloadIcon } from "@radix-ui/react-icons";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { SubnetCardForm } from "./subnet-practice-form";
+import { SubnetForm } from "./subnet-form";
 
 export function SubnetCard() {
   const t = useTranslations("Practice");
@@ -47,7 +46,7 @@ export function SubnetCard() {
         })}
       </CardDescription>
       <CardContent>
-        <SubnetCardForm subnets={exercise.subnets} />
+        <SubnetForm subnets={exercise.subnets} />
       </CardContent>
       <CardFooter className="flex justify-end">
         <Button size={"sm"} onClick={() => loadNewExercise()}>

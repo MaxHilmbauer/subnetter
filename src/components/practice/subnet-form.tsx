@@ -17,8 +17,9 @@ import React, { useEffect } from "react";
 import { Input } from "../ui/input";
 import { Separator } from "../ui/separator";
 import { nthNumber } from "@/utils/numbers/ordinal-numbers";
+import { Button } from "@mui/material";
 
-export function SubnetCardForm({ subnets }: { subnets: Subnet[] }) {
+export function SubnetForm({ subnets }: { subnets: Subnet[] }) {
   const subnetFormSchema = z.object({
     subnets: z.array(
       z.object({
@@ -49,7 +50,7 @@ export function SubnetCardForm({ subnets }: { subnets: Subnet[] }) {
   const { fields, append, remove } = useFieldArray({
     name: "subnets",
     control: subnetForm.control,
-    shouldUnregister: false,
+    keyName: "subnetId",
   });
 
   useEffect(() => {
@@ -77,13 +78,38 @@ export function SubnetCardForm({ subnets }: { subnets: Subnet[] }) {
     }
   }, [subnets, append, remove]);
 
-  const onSubmit = (values: z.infer<typeof subnetFormSchema>) => {};
+  const onSubmit = (values: z.infer<typeof subnetFormSchema>) => {
+    console.log(values);
+    console.log(subnets);
+
+    const subnetCount = subnets.length;
+    const fillableSubnets = subnetCount > 4 ? 4 : subnetCount;
+    const filledSubnets = values.subnets;
+    var correct = true;
+
+    for (let i = 0; i < fillableSubnets; i++) {
+      const rightSubnet = i > 2 ? subnets.length - 2 : i;
+      if (
+        filledSubnets[i].networkIP === subnets[rightSubnet].networkIP.address &&
+        filledSubnets[i].mask === "/" + subnets[rightSubnet].mask.cidr &&
+        filledSubnets[i].firstHostIP ===
+          subnets[rightSubnet].firstHostIP.address &&
+        filledSubnets[i].lastHostIP ===
+          subnets[rightSubnet].lastHostIP.address &&
+        filledSubnets[i].broadcastIP ===
+          subnets[rightSubnet].broadcastIP.address
+      ) {
+        correct = false;
+      }
+    }
+    console.log(correct ? "All correct" : "Some wrong");
+  };
 
   return (
     <Form {...subnetForm}>
       <form onSubmit={subnetForm.handleSubmit(onSubmit)}>
         {fields.map((field, index) => (
-          <div key={field.id} className="mt-6">
+          <div key={field.subnetId} className="mt-6">
             <h3 className="text-lg font-medium">
               {index + 1}
               {nthNumber(index + 1)} Subnet
@@ -92,7 +118,6 @@ export function SubnetCardForm({ subnets }: { subnets: Subnet[] }) {
             <div className="mt-3 grid max-md:grid-cols-1 grid-cols-5 gap-4 px-2">
               <FormField
                 control={subnetForm.control}
-                key={field.id}
                 name={`subnets.${index}.networkIP`}
                 render={({ field }) => (
                   <FormItem>
@@ -106,7 +131,6 @@ export function SubnetCardForm({ subnets }: { subnets: Subnet[] }) {
               />
               <FormField
                 control={subnetForm.control}
-                key={field.id}
                 name={`subnets.${index}.mask`}
                 render={({ field }) => (
                   <FormItem>
@@ -120,7 +144,6 @@ export function SubnetCardForm({ subnets }: { subnets: Subnet[] }) {
               />
               <FormField
                 control={subnetForm.control}
-                key={field.id}
                 name={`subnets.${index}.firstHostIP`}
                 render={({ field }) => (
                   <FormItem>
@@ -134,7 +157,6 @@ export function SubnetCardForm({ subnets }: { subnets: Subnet[] }) {
               />
               <FormField
                 control={subnetForm.control}
-                key={field.id}
                 name={`subnets.${index}.lastHostIP`}
                 render={({ field }) => (
                   <FormItem>
@@ -148,7 +170,6 @@ export function SubnetCardForm({ subnets }: { subnets: Subnet[] }) {
               />
               <FormField
                 control={subnetForm.control}
-                key={field.id}
                 name={`subnets.${index}.broadcastIP`}
                 render={({ field }) => (
                   <FormItem>
@@ -163,6 +184,7 @@ export function SubnetCardForm({ subnets }: { subnets: Subnet[] }) {
             </div>
           </div>
         ))}
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );

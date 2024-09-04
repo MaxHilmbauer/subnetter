@@ -17,9 +17,20 @@ import React, { useEffect } from "react";
 import { Input } from "../ui/input";
 import { Separator } from "../ui/separator";
 import { nthNumber } from "@/utils/numbers/ordinal-numbers";
-import { Button } from "@mui/material";
+import { Button } from "../ui/button";
+import { useTranslations } from "next-intl";
 
-export function SubnetForm({ subnets }: { subnets: Subnet[] }) {
+export function SubnetForm({
+  subnets,
+  loadNewExercise,
+  showSolution,
+}: {
+  subnets: Subnet[];
+  loadNewExercise: () => void;
+  showSolution: boolean;
+}) {
+  const t = useTranslations("Practice");
+
   const subnetFormSchema = z.object({
     subnets: z.array(
       z.object({
@@ -108,83 +119,90 @@ export function SubnetForm({ subnets }: { subnets: Subnet[] }) {
   return (
     <Form {...subnetForm}>
       <form onSubmit={subnetForm.handleSubmit(onSubmit)}>
-        {fields.map((field, index) => (
-          <div key={field.subnetId} className="mt-6">
-            <h3 className="text-lg font-medium">
-              {index + 1}
-              {nthNumber(index + 1)} Subnet
-            </h3>
-            <Separator />
-            <div className="mt-3 grid max-md:grid-cols-1 grid-cols-5 gap-4 px-2">
-              <FormField
-                control={subnetForm.control}
-                name={`subnets.${index}.networkIP`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Network IP</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={subnetForm.control}
-                name={`subnets.${index}.mask`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Subnet Mask </FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={subnetForm.control}
-                name={`subnets.${index}.firstHostIP`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>First Host</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={subnetForm.control}
-                name={`subnets.${index}.lastHostIP`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Last Host</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={subnetForm.control}
-                name={`subnets.${index}.broadcastIP`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Broadcast IP</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        <div>
+          {fields.map((field, index) => (
+            <div key={field.subnetId} className="mt-6">
+              <h3 className="text-lg font-medium">
+                {index + 1}
+                {nthNumber(index + 1)} Subnet
+              </h3>
+              <Separator />
+              <div className="mt-3 grid max-md:grid-cols-1 grid-cols-5 gap-4 px-2">
+                <FormField
+                  control={subnetForm.control}
+                  name={`subnets.${index}.networkIP`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Network IP</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={subnetForm.control}
+                  name={`subnets.${index}.mask`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Subnet Mask </FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={subnetForm.control}
+                  name={`subnets.${index}.firstHostIP`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>First Host</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={subnetForm.control}
+                  name={`subnets.${index}.lastHostIP`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Last Host</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={subnetForm.control}
+                  name={`subnets.${index}.broadcastIP`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Broadcast IP</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
-          </div>
-        ))}
-        <Button type="submit">Submit</Button>
+          ))}
+        </div>
+        <div className="flex justify-between mt-6">
+          <Button type="button" onClick={loadNewExercise}>
+            {t("newExerciseBtn")}
+          </Button>
+          <Button type="submit">{t("showSolutionBtn")}</Button>
+        </div>
       </form>
     </Form>
   );

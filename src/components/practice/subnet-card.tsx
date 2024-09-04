@@ -46,13 +46,11 @@ export function SubnetCard() {
         })}
       </CardDescription>
       <CardContent>
-        <SubnetForm subnets={exercise.subnets} />
+        <SubnetForm
+          subnets={exercise.subnets}
+          loadNewExercise={loadNewExercise}
+        />
       </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button size={"sm"} onClick={() => loadNewExercise()}>
-          {t("newExerciseBtn")}
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

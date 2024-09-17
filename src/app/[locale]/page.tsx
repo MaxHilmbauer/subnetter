@@ -1,6 +1,5 @@
 import { LayoutCenter } from "@/components/layouts/layout-center";
 import SubnetPractice from "@/components/practice/subnet-practice";
-import { generateSubnettingExercise } from "@/utils/subnetting/subnet-exercise-generator";
 
 export default async function Home() {
   return (

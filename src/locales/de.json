@@ -3,8 +3,6 @@
     "title": "Übungen",
     "description": "Es ist folgendes Subnet gegeben {networkIP}/{cidr}. Unterteile es in {hosts} Hosts. Fülle folgende Felder aus.",
     "newExerciseBtn": "Neue Aufgabe",
-    "showSolutionBtn": "Lösung anzeigen"
+    "completionBtn": "Lösung anzeigen"
   }
-  
 }
-

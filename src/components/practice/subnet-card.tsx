@@ -1,16 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { SubnettingExercise } from "@/types/subnetting";
-import { generateSubnettingExercise } from "@/utils/subnetting/subnet-exercise-generator";
+import { generateSubnettingExercise } from "@/utils/subnetting/subnet-exercise-service";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { SubnetForm } from "./subnet-form";
@@ -27,7 +25,6 @@ export function SubnetCard() {
 
   const loadNewExercise = () => {
     const exercise = generateSubnettingExercise();
-    console.log(exercise.hostCount);
     setExercise(exercise);
   };
 
@@ -49,6 +46,7 @@ export function SubnetCard() {
         <SubnetForm
           subnets={exercise.subnets}
           loadNewExercise={loadNewExercise}
+          showSolution={() => {}}
         />
       </CardContent>
     </Card>

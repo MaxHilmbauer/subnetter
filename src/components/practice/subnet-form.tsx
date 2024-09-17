@@ -27,7 +27,7 @@ export function SubnetForm({
 }: {
   subnets: Subnet[];
   loadNewExercise: () => void;
-  showSolution: boolean;
+  showSolution: () => void;
 }) {
   const t = useTranslations("Practice");
 
@@ -101,19 +101,20 @@ export function SubnetForm({
     for (let i = 0; i < fillableSubnets; i++) {
       const rightSubnet = i > 2 ? subnets.length - 2 : i;
       if (
-        filledSubnets[i].networkIP === subnets[rightSubnet].networkIP.address &&
-        filledSubnets[i].mask === "/" + subnets[rightSubnet].mask.cidr &&
-        filledSubnets[i].firstHostIP ===
-          subnets[rightSubnet].firstHostIP.address &&
-        filledSubnets[i].lastHostIP ===
-          subnets[rightSubnet].lastHostIP.address &&
-        filledSubnets[i].broadcastIP ===
+        filledSubnets[i].networkIP !== subnets[rightSubnet].networkIP.address ||
+        filledSubnets[i].mask !== "/" + subnets[rightSubnet].mask.cidr ||
+        filledSubnets[i].firstHostIP !==
+          subnets[rightSubnet].firstHostIP.address ||
+        filledSubnets[i].lastHostIP !==
+          subnets[rightSubnet].lastHostIP.address ||
+        filledSubnets[i].broadcastIP !==
           subnets[rightSubnet].broadcastIP.address
       ) {
         correct = false;
       }
     }
-    console.log(correct ? "All correct" : "Some wrong");
+
+    alert(correct ? "All correct" : "Some wrong");
   };
 
   return (
@@ -135,7 +136,7 @@ export function SubnetForm({
                     <FormItem>
                       <FormLabel>Network IP</FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input size={0} {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -201,7 +202,7 @@ export function SubnetForm({
           <Button type="button" onClick={loadNewExercise}>
             {t("newExerciseBtn")}
           </Button>
-          <Button type="submit">{t("showSolutionBtn")}</Button>
+          <Button type="submit">{t("completionBtn")}</Button>
         </div>
       </form>
     </Form>
